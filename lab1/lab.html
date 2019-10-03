@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cube, cone, and sphere</title>
+    </head>
+<canvas  width="1200" height="800" id="canvas"></canvas>
+<!-- vertex shader code block-->
+<script id="3d-vertex-shader" type="x-shader/x-vertex">
+        // attribute means that it is an array containing the information
+		// about EVERY point of the object.
+		// attribute was passed from the javascript file
+attribute vec4 a_position;
+attribute vec4 a_color;
+
+uniform mat4 u_matrix;
+
+// varying means that we will pass this data to fragment shader
+// this data was NOT passed from the JS file.
+varying vec4 v_color;
+
+void main() {
+  // Multiply the position by the matrix.
+  gl_Position = u_matrix * a_position;
+
+  // Pass the color to the fragment shader.
+  v_color = a_color;
+}
+</script>
+<!-- fragment shader code block-->
+<script id="3d-fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+// Passed in from the vertex shader.
+varying vec4 v_color;
+
+uniform vec4 u_colorMult;
+
+void main() {
+   gl_FragColor = v_color * u_colorMult;
+}
+
+</script>
+<script type="text/javascript" src="../lib/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/primitives.js"></script>
+<script type="text/javascript" src="../Common/m4.js"></script>
+<script type="text/javascript" src="lab.js"></script></html>
